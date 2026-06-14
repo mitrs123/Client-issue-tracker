@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IssueTracker | Sign In</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#8f0041",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#e6deff",
+                        "on-secondary-container": "#564d80",
+                        "secondary-fixed-dim": "#cabffa",
+                        "on-primary-container": "#747676",
+                        "on-primary-fixed": "#1a1c1c",
+                        "tertiary": "#fe147a",
+                        "primary-container": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#c6c6c7",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fcf8f8",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-container": "#f1edec",
+                        "on-surface-variant": "#444748",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ffffff",
+                        "surface": "#fcf8f8",
+                        "on-tertiary-container": "#e7006d",
+                        "outline-variant": "#c4c7c8",
+                        "secondary-container": "#cdc2fd",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1c1b1b",
+                        "on-secondary-fixed": "#1c1343",
+                        "tertiary-fixed-dim": "#ffb1c3",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "primary": "#201747",
+                        "surface-container-high": "#ebe7e7",
+                        "tertiary-fixed": "#ffd9e0",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "outline": "#747878",
+                        "surface-tint": "#5d5f5f",
+                        "on-background": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#484071",
+                        "on-tertiary-fixed": "#3f0019",
+                        "secondary": "#201747",
+                        "background": "#fcf8f8",
+                        "surface-dim": "#ddd9d9",
+                        "inverse-surface": "#313030",
+                        "inverse-on-surface": "#f4f0ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "md": "24px",
+                        "base": "8px",
+                        "xl": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcf8f8;
+            overflow: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(32, 23, 71, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mesh-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(254, 20, 122, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(32, 23, 71, 0.05) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-md">
+<!-- Atmospheric Background -->
+<div class="mesh-bg"></div>
+<!-- Login Container -->
+<main class="w-full max-w-5xl">
+<div class="glass-card flex flex-col md:flex-row overflow-hidden rounded-xl shadow-2xl">
+<!-- Left Panel: Branding & Identity -->
+<section class="w-full md:w-1/2 p-xl flex flex-col justify-between bg-primary relative overflow-hidden">
+<!-- Abstract Decorative Element -->
+<div class="absolute -top-24 -left-24 w-64 h-64 bg-tertiary/20 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-24 -right-24 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-base mb-xl">
+<div class="w-12 h-12 bg-tertiary flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-white text-[32px]" data-icon="dashboard">dashboard</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-extrabold text-white tracking-tight">IssueTracker</h1>
+</div>
+<div class="space-y-md">
+<h2 class="font-headline-lg text-headline-lg text-white leading-tight">Streamline your <br/><span class="text-tertiary">workflow</span>.</h2>
+<p class="font-body-lg text-body-lg text-white/70 max-w-md">
+                            The next generation of SaaS management. Monitor, track, and resolve system issues with precision and digital luxury.
+                        </p>
+</div>
+</div>
+<div class="relative z-10 mt-xl">
+<div class="flex items-center gap-sm">
+<div class="flex -space-x-4">
+<img class="w-10 h-10 rounded-full border-2 border-primary" data-alt="A professional portrait of a tech executive in a brightly lit, modern minimalist office environment. The image is clean and high-contrast, featuring soft directional lighting that emphasizes the premium aesthetic. The background is a blurred sequence of glass and steel, echoing the digital luxury and precision of a high-end SaaS platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVmMB1PQ1IdmxxEhJa9uAl8UaNaOyW8qJAk0WhZlN_8IoS9RE4-2wt4XedjZ6Er9-4WQ9h0zqiXjG3xLGvzsXn5TUT3h-cGL0657oWzV0t4IzEYH40f8D8mthZfqWiP5upFMTwSKmn0PjGF3G7nRDrHxL1nCspQMEYnipDqcF3pWFQEl8fUglq9-Co7Fsj6NUOXPAWVZY8nYnK5ct-Miu7MjDX1dfBMDohURMmjxt9ZF2z9Uk8dj9isv9Cwa7MrFWTvNBQ8br7vQ"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary" data-alt="A sharp, high-contrast headshot of a developer against a clean white architectural background. The lighting is crisp and modern, creating a professional and focused atmosphere. The visual style is avant-garde and minimalist, using a cool color temperature to convey technological sophistication and high-energy modernism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5bqF5-BOcn6aGDO5w60NrCrjaGSTyME_ZyT0kCOVJKe0XFZOIt-dh2go4tVBzY4hDUyAazkWMFew0qZLc1OGrx9WCclBlso25jBxQq26hDEWTh-yAmqacF7nYOpVF2JAnmeQQnr4rrGiEIBeka4DjRXS4TEAC2lTKXmaAP16q9ATUpaNsITcNVfzEyo9WhF5OaE9DNwG0jEqrhWRWW5QioOTAN85RyVVTI_kUnGUJgyYw1u63T6WI61OiRtY_mqCZaa8ZPV7wVg"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary" data-alt="Close up photography of a young entrepreneur in a minimalist white-on-white workspace. The lighting is high-key and airy, highlighting clear skin and a confident expression. The aesthetic is sophisticated and precise, aligned with a digital luxury brand identity using vibrant tertiary accents for visual depth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBISVSiCDs4fLFuTqnzYiS4Kc6Ix8gnrmA4tVN5O7wWwScpj416Qz2OHRuGi6U9E1jtau3a-Q-wBi0Z8NMIE3WSNgx-xi0w_S0c3aoOyC3XBbkdY9TS7IeYRuAp55TxSR57HmfY200ysyMdP1o-JHLd4Ps1bqVp1SLho0YC2A9LMgXAMggCB-oEmRZuxHKgo44o3V3OsBtzDNbFZNagaz4-p1ykyt0PYZ1FUtmtH87aYWM2oHeuppjE5QwzuMyKvUbaChs7UkaLQw"/>
+</div>
+<span class="font-label-md text-label-md text-white/60">Trusted by 2,000+ organizations</span>
+</div>
+</div>
+</section>
+<!-- Right Panel: Sign-in Form -->
+<section class="w-full md:w-1/2 p-xl bg-white/40 flex flex-col justify-center">
+<div class="max-w-md mx-auto w-full">
+<div class="mb-xl">
+<h3 class="font-headline-md text-headline-md text-secondary font-bold mb-xs">Welcome Back</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Please enter your details to sign in.</p>
+</div>
+<form class="space-y-md" onsubmit="return false;">
+<!-- Username Field -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary block" for="username">Username</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant transition-colors group-focus-within:text-tertiary" data-icon="person">person</span>
+<input class="w-full pl-12 pr-4 py-3 rounded-lg border border-secondary/10 bg-white/50 focus:bg-white focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none transition-all font-body-md text-body-md text-secondary" id="username" placeholder="Enter your username" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-secondary block" for="password">Password</label>
+<a class="font-label-md text-label-md text-tertiary hover:opacity-80 transition-opacity" href="#">Forgot password?</a>
+</div>
+<div class="relative group" x-data="{ show: false }">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant transition-colors group-focus-within:text-tertiary" data-icon="lock">lock</span>
+<input class="w-full pl-12 pr-12 py-3 rounded-lg border border-secondary/10 bg-white/50 focus:bg-white focus:border-tertiary focus:ring-1 focus:ring-tertiary outline-none transition-all font-body-md text-body-md text-secondary" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-tertiary transition-colors" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined" data-icon="visibility" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center gap-xs pt-xs">
+<input class="w-4 h-4 rounded border-secondary/20 text-tertiary focus:ring-tertiary" id="remember" type="checkbox"/>
+<label class="font-label-md text-label-md text-on-surface-variant cursor-pointer" for="remember">Remember me for 30 days</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-tertiary text-white font-bold py-3 px-6 rounded-lg hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-xs mt-md" type="submit">
+                            Sign in
+                            <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Social Login Divider -->
+<div class="relative py-md">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-secondary/10"></div>
+</div>
+<div class="relative flex justify-center text-label-md">
+<span class="bg-transparent px-md text-on-surface-variant">Or continue with</span>
+</div>
+</div>
+<!-- Social Actions -->
+<div class="grid grid-cols-2 gap-md">
+<button class="flex items-center justify-center gap-xs py-2 border border-secondary/10 rounded-lg hover:bg-white transition-colors">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-label-md text-label-md text-secondary">Google</span>
+</button>
+<button class="flex items-center justify-center gap-xs py-2 border border-secondary/10 rounded-lg hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-secondary" data-icon="terminal">terminal</span>
+<span class="font-label-md text-label-md text-secondary">Github</span>
+</button>
+</div>
+</form>
+<div class="mt-xl text-center">
+<p class="font-label-md text-label-md text-on-surface-variant">
+                            Don't have an account? 
+                            <a class="text-tertiary font-bold hover:underline" href="#">Create an account</a>
+</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Identity -->
+<footer class="fixed bottom-lg left-0 w-full text-center px-md">
+<p class="font-label-md text-label-md text-on-surface-variant/50">
+            © 2024 IssueTracker SaaS Platform. All rights reserved. Precision engineered for performance.
+        </p>
+</footer>
+<script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = 'visibility';
+            }
+        }
+
+        // Optional micro-interaction: subtle mouse movement for the background glow
+        document.addEventListener('mousemove', (e) => {
+            const mesh = document.querySelector('.mesh-bg');
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            
+            mesh.style.backgroundImage = `
+                radial-gradient(at ${x}% ${y}%, rgba(254, 20, 122, 0.08) 0px, transparent 50%),
+                radial-gradient(at ${100-x}% ${100-y}%, rgba(32, 23, 71, 0.08) 0px, transparent 50%)
+            `;
+        });
+    </script>
+</body></html>

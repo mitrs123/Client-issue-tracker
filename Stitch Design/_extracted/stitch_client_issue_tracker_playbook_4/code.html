@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Issue - IssueTracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#8f0041",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#e6deff",
+                        "on-secondary-container": "#564d80",
+                        "secondary-fixed-dim": "#cabffa",
+                        "on-primary-container": "#747676",
+                        "on-primary-fixed": "#1a1c1c",
+                        "tertiary": "#FE147A", // Updated to Neon Pink per brand guidance
+                        "primary-container": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#c6c6c7",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fcf8f8",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-container": "#f1edec",
+                        "on-surface-variant": "#444748",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ffffff",
+                        "surface": "#fcf8f8",
+                        "on-tertiary-container": "#e7006d",
+                        "outline-variant": "#c4c7c8",
+                        "secondary-container": "#cdc2fd",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1c1b1b",
+                        "on-secondary-fixed": "#1c1343",
+                        "tertiary-fixed-dim": "#ffb1c3",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "primary": "#201747", // Deep Midnight Navy per brand guidance
+                        "surface-container-high": "#ebe7e7",
+                        "tertiary-fixed": "#ffd9e0",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "outline": "#747878",
+                        "surface-tint": "#5d5f5f",
+                        "on-background": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#484071",
+                        "on-tertiary-fixed": "#3f0019",
+                        "secondary": "#201747",
+                        "background": "#fcf8f8",
+                        "surface-dim": "#ddd9d9",
+                        "inverse-surface": "#313030",
+                        "inverse-on-surface": "#f4f0ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "md": "24px",
+                        "base": "8px",
+                        "xl": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #fcf8f8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-header { backdrop-filter: blur(8px); background: rgba(255, 255, 255, 0.8); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #FE147A !important; border-width: 2px !important; }
+        .bento-card { border: 1px solid rgba(32, 23, 71, 0.1); transition: transform 0.2s ease, border-color 0.2s ease; }
+        .bento-card:hover { border-color: rgba(32, 23, 71, 0.2); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 h-screen w-64 bg-surface-container-lowest dark:bg-surface-dim border-r border-outline-variant/10 dark:border-outline-variant/20 flex flex-col py-md px-sm z-50">
+<div class="mb-xl px-4">
+<h1 class="font-headline-md text-headline-md font-extrabold text-on-surface tracking-tighter">IssueTracker</h1>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">SaaS Platform</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant/80 hover:text-on-surface transition-colors rounded-lg hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant/80 hover:text-on-surface transition-colors rounded-lg hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span class="font-label-md text-label-md">Websites</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary dark:text-tertiary-fixed font-bold bg-surface-container dark:bg-surface-container-high rounded-lg scale-[0.99] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="error_outline">error_outline</span>
+<span class="font-label-md text-label-md">Issues</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant/80 hover:text-on-surface transition-colors rounded-lg hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant/80 hover:text-on-surface transition-colors rounded-lg hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Clients</span>
+</a>
+</nav>
+<div class="mt-auto px-4 pb-md">
+<button class="w-full bg-tertiary text-on-tertiary py-3 rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-tertiary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="font-label-md text-label-md">Report Issue</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- Top Navigation Shell -->
+<header class="sticky top-0 z-40 bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant/10 dark:border-outline-variant/20 h-20 px-lg flex justify-between items-center glass-header">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg font-label-md text-label-md focus:ring-0" placeholder="Search issues, websites, or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="font-label-md text-label-md font-bold text-on-surface">Alex Rivera</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Support Lead</p>
+</div>
+<img alt="User Avatar" class="h-10 w-10 rounded-full object-cover border-2 border-tertiary/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDytdv7JIe6iZlw1ee7Qhncyr9wlYtkchj3q8MJ-Z3NfkvSDXtAQVsXSO53jXbMhjJPoIur0hHrHdzoXasO8lSBTDmPZFmupAGdNmKzTXM3zJ1rRbXYXQX920SbcYC9JM2Zaq178RbnWf0y_jdCW4fjBlYAQ9dqOJR-OfF1XtEbDxarsn8QrJQAX_ik4CrUtK9a6_v49JeFIiNFC_t7dJHMeWHT3yR0G2e-vK2spL205hTCV3l61S0o-vrXgOGDJJKmC_1wJmgSg"/>
+</div>
+</div>
+</header>
+<div class="p-lg max-w-5xl mx-auto">
+<!-- Page Header -->
+<div class="mb-lg">
+<nav class="flex items-center gap-2 mb-4">
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold font-label-md text-label-md">Report Issue</span>
+</nav>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Create Issue Report</h2>
+<p class="text-body-md text-on-surface-variant max-w-2xl">Log a new technical issue or bug report. Provide detailed information to help our engineering team resolve it faster.</p>
+</div>
+<!-- Report Issue Form Card -->
+<div class="bg-white bento-card rounded-xl p-md lg:p-lg relative overflow-hidden">
+<!-- Visual Accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/5 rounded-bl-full -mr-16 -mt-16"></div>
+<form class="space-y-8 relative" id="report-form">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Website Select -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md font-bold text-primary block">Target Website</label>
+<div class="relative">
+<select class="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant/30 rounded-lg font-body-md appearance-none">
+<option>Select a project</option>
+<option>acme-corp-storefront.com</option>
+<option>staging.nexus-app.io</option>
+<option>client-portal.main.com</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Type Select -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md font-bold text-primary block">Issue Type</label>
+<div class="relative">
+<select class="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant/30 rounded-lg font-body-md appearance-none">
+<option value="bug">Technical Bug</option>
+<option value="ui">UI/UX Inconsistency</option>
+<option value="performance">Performance Regression</option>
+<option value="security">Security Vulnerability</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="bug_report">bug_report</span>
+</div>
+</div>
+</div>
+<!-- Title Input -->
+<div class="space-y-2">
+<div class="flex justify-between">
+<label class="font-label-md text-label-md font-bold text-primary block">Issue Title</label>
+<span class="text-[12px] text-on-surface-variant font-medium" id="char-count">0 / 80</span>
+</div>
+<input class="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant/30 rounded-lg font-body-md placeholder:opacity-50" id="title-input" maxlength="80" placeholder="e.g. Navigation menu overlaps on mobile viewport" type="text"/>
+</div>
+<!-- Description Textarea -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md font-bold text-primary block">Detailed Description</label>
+<textarea class="w-full p-4 bg-surface-container-lowest border border-outline-variant/30 rounded-lg font-body-md placeholder:opacity-50 resize-none" placeholder="Please describe the steps to reproduce, expected behavior, and actual behavior..." rows="5"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Severity -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md font-bold text-primary block">Severity Level</label>
+<div class="grid grid-cols-4 gap-2">
+<button class="severity-btn py-3 px-2 border border-outline-variant/30 rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors" data-severity="low" type="button">Low</button>
+<button class="severity-btn py-3 px-2 border border-outline-variant/30 rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors" data-severity="med" type="button">Med</button>
+<button class="severity-btn py-3 px-2 border-2 border-tertiary bg-tertiary/5 text-tertiary font-bold rounded-lg font-label-md text-label-md" data-severity="high" type="button">High</button>
+<button class="severity-btn py-3 px-2 border border-outline-variant/30 rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors" data-severity="crit" type="button">Crit</button>
+</div>
+</div>
+<!-- Dropzone Placeholder -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md font-bold text-primary block">Attachments</label>
+<div class="border-2 border-dashed border-outline-variant/30 rounded-lg p-4 flex flex-col items-center justify-center bg-surface-container-low/30 hover:bg-surface-container-low transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<p class="text-[12px] text-on-surface-variant mt-2">Drop files or <span class="text-tertiary font-bold">browse</span></p>
+<p class="text-[10px] text-on-surface-variant/60 uppercase mt-1">PNG, JPG or MP4 (Max 10MB)</p>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-8 border-t border-outline-variant/10 flex flex-col-reverse sm:flex-row justify-end gap-4">
+<button class="px-8 py-3 rounded-lg font-bold text-primary border border-primary/20 hover:bg-surface-container transition-colors font-label-md text-label-md" type="button">
+                            Cancel
+                        </button>
+<button class="px-10 py-3 rounded-lg font-bold text-white bg-tertiary shadow-xl shadow-tertiary/20 hover:scale-[1.03] active:scale-[0.98] transition-all font-label-md text-label-md" type="submit">
+                            Submit Report
+                        </button>
+</div>
+</form>
+</div>
+<!-- Tips Bento Section -->
+<div class="mt-lg grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="md:col-span-2 bg-secondary p-md rounded-xl text-white relative overflow-hidden flex items-center">
+<div class="relative z-10">
+<h4 class="font-bold font-body-lg text-body-lg mb-2">Need immediate assistance?</h4>
+<p class="text-white/70 font-label-md text-label-md">For critical production outages, please use our priority hotline or ping the #emergency Slack channel.</p>
+</div>
+<div class="absolute -right-10 opacity-10">
+<span class="material-symbols-outlined text-[160px]" data-icon="support_agent">support_agent</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-md rounded-xl flex flex-col justify-center">
+<p class="text-on-surface-variant font-label-md text-label-md italic">"Precise issue titles reduce triage time by up to 40%."</p>
+<p class="font-bold text-primary mt-4 font-label-md text-label-md">— Engineering Handbook</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Character counter for Title
+        const titleInput = document.getElementById('title-input');
+        const charCount = document.getElementById('char-count');
+
+        titleInput.addEventListener('input', (e) => {
+            const length = e.target.value.length;
+            charCount.textContent = `${length} / 80`;
+            if (length >= 70) {
+                charCount.classList.add('text-tertiary');
+            } else {
+                charCount.classList.remove('text-tertiary');
+            }
+        });
+
+        // Severity selection logic
+        const severityBtns = document.querySelectorAll('.severity-btn');
+        severityBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                severityBtns.forEach(b => {
+                    b.classList.remove('border-2', 'border-tertiary', 'bg-tertiary/5', 'text-tertiary', 'font-bold');
+                    b.classList.add('border', 'border-outline-variant/30', 'text-on-surface-variant');
+                });
+                btn.classList.add('border-2', 'border-tertiary', 'bg-tertiary/5', 'text-tertiary', 'font-bold');
+                btn.classList.remove('border', 'border-outline-variant/30', 'text-on-surface-variant');
+            });
+        });
+
+        // Submit form interaction
+        const form = document.getElementById('report-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span> Processing...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Issue reported successfully!');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                form.reset();
+                charCount.textContent = '0 / 80';
+            }, 1500);
+        });
+    </script>
+</body></html>

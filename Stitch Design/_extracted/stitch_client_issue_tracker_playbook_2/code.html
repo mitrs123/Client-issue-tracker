@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Issue Details - IssueTracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#e5e2e1",
+                      "on-tertiary-fixed-variant": "#8f0041",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#e6deff",
+                      "on-secondary-container": "#564d80",
+                      "secondary-fixed-dim": "#cabffa",
+                      "on-primary-container": "#747676",
+                      "on-primary-fixed": "#1a1c1c",
+                      "tertiary": "#FE147A",
+                      "primary-container": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-primary": "#c6c6c7",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "surface-bright": "#fcf8f8",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#e5e2e1",
+                      "on-primary-fixed-variant": "#454747",
+                      "surface-container": "#f1edec",
+                      "on-surface-variant": "#444748",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#ffffff",
+                      "on-tertiary-container": "#e7006d",
+                      "outline-variant": "rgba(32, 23, 71, 0.1)",
+                      "secondary-container": "#cdc2fd",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1c1b1b",
+                      "on-secondary-fixed": "#1c1343",
+                      "tertiary-fixed-dim": "#ffb1c3",
+                      "surface-container-low": "#f6f3f2",
+                      "primary-fixed": "#e2e2e2",
+                      "on-error-container": "#93000a",
+                      "primary": "#5d5f5f",
+                      "surface-container-high": "#ebe7e7",
+                      "tertiary-fixed": "#ffd9e0",
+                      "primary-fixed-dim": "#c6c6c7",
+                      "outline": "#747878",
+                      "surface-tint": "#5d5f5f",
+                      "on-background": "#1c1b1b",
+                      "on-secondary-fixed-variant": "#484071",
+                      "on-tertiary-fixed": "#3f0019",
+                      "secondary": "#201747",
+                      "background": "#fcf8f8",
+                      "surface-dim": "#ddd9d9",
+                      "inverse-surface": "#313030",
+                      "inverse-on-surface": "#f4f0ef"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "12px",
+                      "lg": "48px",
+                      "xs": "4px",
+                      "md": "24px",
+                      "base": "8px",
+                      "xl": "80px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #fcf8f8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e5e2e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Side Navigation Anchor -->
+<aside class="fixed left-0 h-screen w-64 bg-surface-container-lowest border-r border-outline-variant/10 flex flex-col py-md px-sm z-50">
+<div class="px-4 mb-xl">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">IssueTracker</span>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">SaaS Platform</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary font-bold bg-surface-container rounded-lg scale-[0.99] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="error_outline">error_outline</span>
+<span class="font-label-md text-label-md">Issues</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span class="font-label-md text-label-md">Websites</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Clients</span>
+</a>
+</nav>
+<div class="mt-auto px-4 pb-4">
+<button class="w-full bg-tertiary text-on-tertiary py-3 rounded-lg font-label-md text-label-md hover:opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                Report Issue
+            </button>
+</div>
+</aside>
+<!-- Top Navigation Anchor -->
+<header class="flex justify-between items-center h-20 px-lg ml-64 sticky top-0 bg-surface-container-lowest border-b border-outline-variant/10 z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-label-md focus:ring-2 focus:ring-tertiary" placeholder="Search issues, clients or notes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-label-md text-label-md font-bold">Alex Manager</p>
+<p class="text-[10px] uppercase tracking-wider text-tertiary font-bold">Administrator</p>
+</div>
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-tertiary/20" data-alt="A professional headshot of a modern creative manager with short hair and a friendly expression. The background is a clean, minimalist studio setting with soft directional lighting. The overall aesthetic is bright, high-contrast, and premium, matching a digital luxury brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiAbSmf1N3FmjaiZ1FqqRT31Yeub_rtIYlvp1s2rKz3WumqHEvcBSYhKEYvCUMMJSQR-c88gXypzPmO3vUvLQMqB4_JHcVwbDFyWYAtPJBL_6j2ksspb7yXNmeBQoYm8mxkIn6x94QzenU1cgbztqJmW8RYzuDiW8CAf86qpZtq2H3BoCp6-cpLb3VPdNl7G1KyiZZe1Y46Bv0VAK92uoGVbULErzm37EzXO-QwZNBUTu9GFOFu6K1u4LG7Znw928Ra6BihYhI7w"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-md">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 bg-secondary text-white text-[10px] font-bold rounded uppercase tracking-tighter">ISSUE-742</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-md text-label-md text-on-surface-variant">Created 2 days ago</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface max-w-3xl leading-tight">Persistent 500 Error on Checkout API for Enterprise Accounts</h1>
+<div class="flex gap-2 mt-4">
+<span class="flex items-center gap-1.5 px-3 py-1 bg-error-container text-on-error-container rounded-full font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="emergency_home">emergency_home</span>
+                        Critical
+                    </span>
+<span class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high text-on-surface font-label-md text-label-md border border-outline-variant/30 rounded-full">
+<span class="material-symbols-outlined text-sm" data-icon="pending">pending</span>
+                        In Progress
+                    </span>
+<span class="flex items-center gap-1.5 px-3 py-1 bg-tertiary/10 text-tertiary rounded-full font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="payments">payments</span>
+                        Billing Core
+                    </span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline-variant text-on-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-base" data-icon="share">share</span>
+                    Share
+                </button>
+<button class="px-4 py-2 bg-secondary text-on-secondary rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-base" data-icon="done_all">done_all</span>
+                    Resolve
+                </button>
+</div>
+</div>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-12 gap-xl">
+<!-- Main Column (Left) -->
+<div class="col-span-12 lg:col-span-8 space-y-xl">
+<!-- Description -->
+<section>
+<h2 class="font-label-md text-label-md font-bold uppercase tracking-widest text-on-surface-variant mb-md border-b border-outline-variant/10 pb-2">Description</h2>
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl">
+<div class="prose prose-sm max-w-none text-on-surface leading-relaxed font-body-md text-body-md">
+<p>We've received multiple reports from Tier 1 clients (specifically Acme Corp and Globex) regarding a persistent internal server error when attempting to finalize checkout for bulk orders exceeding 5,000 units. Initial logs suggest a timeout in the <code>/api/v2/transactions/process</code> endpoint.</p>
+<ul class="mt-4 list-disc list-inside space-y-2 text-on-surface-variant">
+<li>Error manifests after 30 seconds of pending state.</li>
+<li>Affects only Enterprise tier accounts.</li>
+<li>Temporary workaround: Splitting orders into smaller batches.</li>
+</ul>
+</div>
+<div class="mt-lg pt-lg border-t border-outline-variant/10">
+<p class="font-label-md text-label-md font-bold text-on-surface mb-sm">Attachments (2)</p>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors group">
+<div class="w-10 h-10 bg-surface-container-high rounded flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md font-bold truncate">server_log_error.txt</p>
+<p class="text-xs text-on-surface-variant">45 KB</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="download">download</span>
+</div>
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors group">
+<div class="w-10 h-10 bg-surface-container-high rounded overflow-hidden">
+<img alt="Screenshot" class="w-full h-full object-cover" data-alt="A detailed digital screenshot of a software dashboard showing complex data visualizations and an error message box. The interface is clean, professional, and minimalist, with a light mode theme using soft grays and sharp navy blue accents. High contrast and premium digital aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN-7jtmg7kOWA3TfNFJWnc4xete6xhAWb6fMuLYRwPtR7MOmpmwECID4dHpdS5imHFvtG4bmvZNTOkNtJ-xrp8MCT8ecauAUPwmwfbtXLBnqcfv0EP5jgpyszPZIKHQDKZDn6Jpmgmd75pShoHoiZcjAKGayMA92XQq-GcrXDqdUptpKUHP3VSZKMn-DyE_dM4IzrGyGGR_YYEPWFbZU6rVUpjMfkNDvFgAfPV5tuJ5PwZ6oXfx5IUhNE_mL0W0CLlH41dqc5qUw"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md font-bold truncate">checkout_error_screenshot.png</p>
+<p class="text-xs text-on-surface-variant">1.2 MB</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="download">download</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Conversation Thread -->
+<section>
+<div class="flex items-center justify-between mb-md border-b border-outline-variant/10 pb-2">
+<h2 class="font-label-md text-label-md font-bold uppercase tracking-widest text-on-surface-variant">Conversation</h2>
+<div class="flex items-center gap-3 bg-surface-container-low p-1 rounded-lg">
+<button class="px-3 py-1 bg-white shadow-sm rounded-md font-label-md text-label-md text-on-surface transition-all" id="public-tab">Public</button>
+<button class="px-3 py-1 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" id="internal-tab">Internal Note</button>
+</div>
+</div>
+<div class="space-y-md">
+<!-- Comment -->
+<div class="flex gap-md">
+<img class="w-10 h-10 rounded-full" data-alt="A portrait of a male software engineer in a modern workspace, with soft ambient light from a computer monitor illuminating his face. The background is a blurred high-end office with minimalist decor. The photography style is crisp, high-key, and professional, utilizing a natural color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrjN2eibuzFnISHC3JYQQuXcdffnLq-v30XGhmq_CFRguCsGlEk_XVtat-kMhfKTuYIIyusAcVyCYd9MlgtKLhG7vlueqhwhtG9fzEBjwhknC-RxiSir9WobCSQ0WrZmUWm2HfiYpHGAD8kM_Rpv7WUTlxXtaLoS9o_fpnZS_ws2IOfLWzXY8vtyxyHZQkmrqRFHbHXhA_9G1QRGJqP7InYZn9AsWFwekp01GKLIanSl0l48z6V5v8L683QH6kIXL57mz_40miOA"/>
+<div class="flex-1 bg-surface-container-lowest border border-outline-variant p-md rounded-xl rounded-tl-none">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md font-bold">Marcus Chen <span class="font-normal text-on-surface-variant ml-2">• Lead Engineer</span></span>
+<span class="text-xs text-on-surface-variant">1 hour ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">I've investigated the logs. It's definitely a database deadlock occurring when we try to update inventory counts for items in the bulk order simultaneously with the payment processing. I'm working on a patch to serialize these updates.</p>
+<div class="mt-3 flex gap-2">
+<button class="flex items-center gap-1 text-xs text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="thumb_up">thumb_up</span> 2
+                                    </button>
+<button class="flex items-center gap-1 text-xs text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="reply">reply</span> Reply
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Internal Note -->
+<div class="flex gap-md">
+<img alt="Manager" class="w-10 h-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWACTyi-2NTCrrCMz9_fmjKIsvGfa9o_0qjRzO45KQbUGaFWER_YGc-qBjiTat5cy5zR5FLIVzhMSkKBRg9xlrLeBdTc-OxngiBu8Babq5R39sR5S8JM6BXgxDpkfivb1_GAXKoMpn0UR6vD6TLUvE7qPfJpYoRa-zhK1MeY6yTR43RDHsCO4Rn8VoK_YaZbV11Jt2JSDWdQE5CqOzwxIcfdjUULmzrc15m3AaaPMZCIk4T09xNzQ0H4Ud3yQU-x2rwKMuHuBgfA"/>
+<div class="flex-1 bg-amber-50/50 border border-amber-200/50 p-md rounded-xl rounded-tl-none">
+<div class="flex justify-between items-center mb-2">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold">You</span>
+<span class="px-1.5 py-0.5 bg-amber-200 text-amber-900 text-[9px] font-black rounded uppercase">Internal Only</span>
+</div>
+<span class="text-xs text-amber-800/60">45 mins ago</span>
+</div>
+<p class="font-body-md text-body-md text-amber-900">Marcus, please prioritize this over the UI refresh. Acme Corp is threatening to pull their Q3 contract if this isn't resolved by EOD Thursday. Let me know if you need extra DevOps support.</p>
+</div>
+</div>
+<!-- Editor -->
+<div class="mt-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden focus-within:border-tertiary transition-all">
+<div class="flex items-center gap-2 p-2 bg-surface-container-low border-b border-outline-variant">
+<button class="p-1.5 hover:bg-white rounded transition-colors"><span class="material-symbols-outlined text-lg" data-icon="format_bold">format_bold</span></button>
+<button class="p-1.5 hover:bg-white rounded transition-colors"><span class="material-symbols-outlined text-lg" data-icon="format_italic">format_italic</span></button>
+<button class="p-1.5 hover:bg-white rounded transition-colors"><span class="material-symbols-outlined text-lg" data-icon="link">link</span></button>
+<button class="p-1.5 hover:bg-white rounded transition-colors"><span class="material-symbols-outlined text-lg" data-icon="image">image</span></button>
+</div>
+<textarea class="w-full border-none focus:ring-0 p-md font-body-md text-body-md min-h-[120px] placeholder:text-on-surface-variant/40" id="comment-box" placeholder="Type your response..."></textarea>
+<div class="flex items-center justify-between p-md border-t border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="alternate_email">alternate_email</span>
+<span class="text-xs text-on-surface-variant">Press / for shortcuts</span>
+</div>
+<button class="px-6 py-2 bg-tertiary text-on-tertiary font-bold rounded-lg font-label-md text-label-md hover:opacity-90 transition-all">Post Message</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Rail -->
+<div class="col-span-12 lg:col-span-4 space-y-md">
+<!-- Details Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<h3 class="font-label-md text-label-md font-bold uppercase tracking-widest text-on-surface-variant mb-md">Issue Context</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Website</span>
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 bg-tertiary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-xs text-tertiary" data-icon="shopping_cart">shopping_cart</span>
+</div>
+<span class="font-label-md text-label-md font-bold">AcmeStore Global</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Reporter</span>
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full" data-alt="Close-up headshot of a female customer support lead in a bright, modern setting. The lighting is soft and flattering, highlighting professional clarity. High-contrast minimalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLSO171xXMvFpgiJcll36o5i8Q5G5tTrzYXjHEwZFi_CHdjL-qtf3A1l0tpBoDjeky6a9nZBWjuf3pLdha9N9k68w2vKSXHTW4XbT_6iUKEzqYieeFliyuXVy0698EWP8Mc48h96CDwGIQRCG0l9-ZSDtZz73EO_jThqd__TwrULrEIdd3Zu9deYK2u4WEXxZDmYtUpY5XQItuhnTWN82X7C14Jmpxkmae7qN8vT5Nq2yu9pA9LTVLbSR10X-juSayVZh9U4ftfw"/>
+<span class="font-label-md text-label-md font-bold">Sarah Jenkins</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Assigned To</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<img alt="Marcus" class="w-6 h-6 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzlHWz-Ln2wqNgNopPV9ELkMbf_jKwu9EfKoAs5GmsK7B_XCQYF2Btq77I9IPDHgRnqad3YZ3CgthPw-awKF6FlHT4heb0yhZzuEb7I_INWtVfM6KCZ6Tu-Ghu7xCuccftMHjmBcr2AsooRKwT3kWCRgyFU3YSLf3raUUCHg9NhrI8u3BoYV71MwB9c9CBVDBT7pisYLGvDhgsuHk_3ojVP3mZA52zTBfTg2tPWpz5Zl5kWDHvzSS_LSqtiGQAOunmhnUeduQELw"/>
+<span class="font-label-md text-label-md font-bold group-hover:text-tertiary transition-colors">Marcus Chen</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant" data-icon="edit">edit</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">SLA Deadline</span>
+<span class="font-label-md text-label-md font-bold text-error">Today, 5:00 PM</span>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-outline-variant text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors">
+                        Edit All Details
+                    </button>
+</div>
+<!-- Timeline -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<h3 class="font-label-md text-label-md font-bold uppercase tracking-widest text-on-surface-variant mb-md">Timeline</h3>
+<div class="relative space-y-6 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant/30">
+<div class="relative flex gap-4">
+<div class="w-6 h-6 bg-tertiary rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-white text-[12px]" data-icon="flag">flag</span>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold">Issue Reported</p>
+<p class="text-xs text-on-surface-variant">Oct 12, 10:24 AM</p>
+</div>
+</div>
+<div class="relative flex gap-4">
+<div class="w-6 h-6 bg-surface-container-high rounded-full flex items-center justify-center z-10 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[12px]" data-icon="person_add">person_add</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Assigned to <span class="font-bold">Marcus Chen</span></p>
+<p class="text-xs text-on-surface-variant">Oct 12, 11:15 AM</p>
+</div>
+</div>
+<div class="relative flex gap-4">
+<div class="w-6 h-6 bg-secondary rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-white text-[12px]" data-icon="priority_high">priority_high</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Priority set to <span class="text-error font-bold">Critical</span></p>
+<p class="text-xs text-on-surface-variant">Oct 12, 11:45 AM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Suggestions Card (Manager Only) -->
+<div class="relative overflow-hidden bg-secondary text-on-secondary rounded-xl p-md group">
+
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-label-md text-label-md font-bold uppercase tracking-widest">AI Suggestions</h3>
+</div>
+<div class="space-y-4">
+<div class="p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+<p class="font-label-md text-label-md font-bold mb-1">Check Redis Cache Clusters</p>
+<p class="text-xs text-white/70 leading-relaxed">Similar patterns observed in ISSUE-341 were caused by Redis node exhaustion.</p>
+</div>
+<div class="p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+<p class="font-label-md text-label-md font-bold mb-1">Suggested Escalation</p>
+<p class="text-xs text-white/70 leading-relaxed">Invite @jdoe (Database Admin) to the conversation thread.</p>
+</div>
+</div>
+<button class="w-full mt-6 py-2 bg-tertiary text-on-tertiary font-bold rounded-lg font-label-md text-label-md shadow-lg shadow-tertiary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            Apply Optimized Path
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions
+        const internalTab = document.getElementById('internal-tab');
+        const publicTab = document.getElementById('public-tab');
+        const commentBox = document.getElementById('comment-box');
+
+        internalTab.addEventListener('click', () => {
+            internalTab.classList.add('bg-white', 'shadow-sm', 'text-on-surface');
+            internalTab.classList.remove('text-on-surface-variant');
+            publicTab.classList.remove('bg-white', 'shadow-sm', 'text-on-surface');
+            publicTab.classList.add('text-on-surface-variant');
+            commentBox.placeholder = "Write an internal-only note for the team...";
+            commentBox.parentElement.classList.add('bg-amber-50/20');
+        });
+
+        publicTab.addEventListener('click', () => {
+            publicTab.classList.add('bg-white', 'shadow-sm', 'text-on-surface');
+            publicTab.classList.remove('text-on-surface-variant');
+            internalTab.classList.remove('bg-white', 'shadow-sm', 'text-on-surface');
+            internalTab.classList.add('text-on-surface-variant');
+            commentBox.placeholder = "Type your response...";
+            commentBox.parentElement.classList.remove('bg-amber-50/20');
+        });
+
+        // Hover lift effect on cards
+        document.querySelectorAll('.bg-surface-container-lowest').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.boxShadow = '0 10px 30px -10px rgba(32, 23, 71, 0.08)';
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'all 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.boxShadow = 'none';
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

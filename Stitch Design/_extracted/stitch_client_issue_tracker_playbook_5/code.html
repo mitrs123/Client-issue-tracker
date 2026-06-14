@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications | IssueTracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .notification-card {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .notification-card:hover {
+      background-color: rgba(241, 237, 236, 0.5);
+    }
+    .unread-indicator {
+      width: 8px;
+      height: 8px;
+      background-color: #FE147A;
+      border-radius: 50%;
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#e5e2e1",
+            "on-tertiary-fixed-variant": "#8f0041",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#e6deff",
+            "on-secondary-container": "#564d80",
+            "secondary-fixed-dim": "#cabffa",
+            "on-primary-container": "#747676",
+            "on-primary-fixed": "#1a1c1c",
+            "tertiary": "#FE147A", /* Brand Neon Pink override based on style guide */
+            "primary-container": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#c6c6c7",
+            "error-container": "#ffdad6",
+            "error": "#ba1a1a",
+            "surface-bright": "#fcf8f8",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2e1",
+            "on-primary-fixed-variant": "#454747",
+            "surface-container": "#f1edec",
+            "on-surface-variant": "#444748",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#ffffff",
+            "surface": "#fcf8f8",
+            "on-tertiary-container": "#FE147A",
+            "outline-variant": "#c4c7c8",
+            "secondary-container": "#cdc2fd",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1c1b1b",
+            "on-secondary-fixed": "#1c1343",
+            "tertiary-fixed-dim": "#ffb1c3",
+            "surface-container-low": "#f6f3f2",
+            "primary-fixed": "#e2e2e2",
+            "on-error-container": "#93000a",
+            "primary": "#201747", /* Brand Midnight Navy override */
+            "surface-container-high": "#ebe7e7",
+            "tertiary-fixed": "#ffd9e0",
+            "primary-fixed-dim": "#c6c6c7",
+            "outline": "#747878",
+            "surface-tint": "#5d5f5f",
+            "on-background": "#1c1b1b",
+            "on-secondary-fixed-variant": "#484071",
+            "on-tertiary-fixed": "#3f0019",
+            "secondary": "#201747",
+            "background": "#fcf8f8",
+            "surface-dim": "#ddd9d9",
+            "inverse-surface": "#313030",
+            "inverse-on-surface": "#f4f0ef"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "12px",
+            "lg": "48px",
+            "xs": "4px",
+            "md": "24px",
+            "base": "8px",
+            "xl": "80px"
+          },
+          "fontFamily": {
+            "headline-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-surface-bright text-on-surface font-body-md text-body-md overflow-x-hidden">
+<!-- Side Navigation Shell (from JSON) -->
+<aside class="fixed left-0 h-screen w-64 bg-surface-container-lowest border-r border-outline-variant/10 flex flex-col py-md px-sm z-50">
+<div class="mb-xl px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">IssueTracker</h1>
+<p class="text-on-surface-variant opacity-70 text-label-md font-label-md">SaaS Platform</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span class="font-label-md text-label-md">Websites</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="error_outline">error_outline</span>
+<span class="font-label-md text-label-md">Issues</span>
+</a>
+<!-- Active State for Notifications -->
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary font-bold bg-surface-container rounded-lg scale-[0.99] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Clients</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<button class="w-full bg-tertiary text-on-tertiary py-3 px-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="font-label-md text-label-md">Report Issue</span>
+</button>
+</div>
+</aside>
+<!-- Top Navigation Shell (from JSON) -->
+<header class="fixed top-0 left-64 right-0 h-20 bg-surface-container-lowest border-b border-outline-variant/10 flex justify-between items-center px-lg z-40">
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container border-none focus:ring-2 focus:ring-tertiary rounded-lg text-label-md" placeholder="Search notifications..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3 pl-2">
+<span class="font-label-md text-label-md font-bold">Alex Rivera</span>
+<img alt="User Avatar" class="w-10 h-10 rounded-full border border-outline-variant/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwRaYAeuNQq0x0-lPAbTU0TR7anhsPlxiL3I-x1FDAXyXtMA-WBnY72SkvPKEL_Nnbbw4WoZWryZ0BHEfOUrt0H9U87tqCrHFJ6qm-GpmSeTt5u_PGc1T0AsWQQa0MArUpxmDGgAlXoj7-abaKYbrCOV_BFYLTomi36qpOb2KTtdsOJanoc4-j8lx0w78zWVOUvw4cJedZJwOYuLb33zFiusiWcKUUkVkkjInUKqPGMqgb66bYo27Tl8hA8PQ1PqIe2xrirFx8fA"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-20 p-xl min-h-screen">
+<div class="max-w-5xl mx-auto">
+<!-- Page Header & Controls -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-lg gap-md">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight mb-xs">Notifications</h2>
+<p class="text-on-surface-variant opacity-80">Manage your system alerts and team updates.</p>
+</div>
+<div class="flex items-center gap-md w-full md:w-auto">
+<div class="flex items-center gap-3 bg-surface-container px-4 py-2 rounded-lg border border-outline-variant/10">
+<span class="text-label-md font-label-md text-on-surface-variant">Unread only</span>
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-outline-variant transition-colors focus:outline-none" id="unread-toggle" onclick="this.classList.toggle('bg-tertiary')">
+<span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1" style="transition: transform 0.2s ease-in-out;"></span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-tertiary font-bold hover:bg-tertiary/5 px-4 py-2 rounded-lg transition-colors border border-tertiary/20">
+<span class="material-symbols-outlined text-[20px]" data-icon="done_all">done_all</span>
+<span class="font-label-md text-label-md">Mark all as read</span>
+</button>
+</div>
+</div>
+<!-- Notifications List -->
+<div class="space-y-0 border border-outline-variant/10 rounded-xl overflow-hidden bg-white">
+<!-- Notification Item 1 (Unread) -->
+<div class="notification-card p-md flex items-start gap-md border-b border-outline-variant/5 group cursor-pointer relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary shrink-0">
+<span class="material-symbols-outlined" data-icon="error" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-primary group-hover:text-tertiary transition-colors">Critical System Error: API Timeout</h3>
+<span class="text-xs text-on-surface-variant whitespace-nowrap ml-4">2 mins ago</span>
+</div>
+<p class="text-on-surface-variant line-clamp-1 mb-2">The production API experienced multiple timeouts in the US-East region. Automated scaling has been triggered but manual intervention may be required.</p>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-xs font-bold text-on-secondary-container bg-secondary-container/30 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]" data-icon="dns">dns</span>
+                Infrastructure
+              </span>
+<div class="unread-indicator"></div>
+</div>
+</div>
+</div>
+<!-- Notification Item 2 (Read) -->
+<div class="notification-card p-md flex items-start gap-md border-b border-outline-variant/5 group cursor-pointer opacity-80 hover:opacity-100">
+<div class="w-12 h-12 rounded-lg bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-primary">New Comment on "Database Optimization"</h3>
+<span class="text-xs text-on-surface-variant whitespace-nowrap ml-4">1 hour ago</span>
+</div>
+<p class="text-on-surface-variant line-clamp-1 mb-2">Sarah Jenkins replied: "I've reviewed the indexing strategy you proposed. It looks solid for the current volume, but we might need..."</p>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-xs font-bold text-on-primary-fixed-variant bg-surface-container-highest px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]" data-icon="person">person</span>
+                Engineering
+              </span>
+</div>
+</div>
+</div>
+<!-- Notification Item 3 (Unread) -->
+<div class="notification-card p-md flex items-start gap-md border-b border-outline-variant/5 group cursor-pointer relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary shrink-0">
+<span class="material-symbols-outlined" data-icon="person_add" style="font-variation-settings: 'FILL' 1;">person_add</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-primary group-hover:text-tertiary transition-colors">Client Onboarding Complete</h3>
+<span class="text-xs text-on-surface-variant whitespace-nowrap ml-4">3 hours ago</span>
+</div>
+<p class="text-on-surface-variant line-clamp-1 mb-2">Vertex Corp has finished setting up their organization profile. You can now assign them to the enterprise workflow.</p>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-xs font-bold text-on-tertiary-fixed-variant bg-tertiary-fixed px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]" data-icon="business">business</span>
+                Account
+              </span>
+<div class="unread-indicator"></div>
+</div>
+</div>
+</div>
+<!-- Notification Item 4 (Read) -->
+<div class="notification-card p-md flex items-start gap-md border-b border-outline-variant/5 group cursor-pointer opacity-80 hover:opacity-100">
+<div class="w-12 h-12 rounded-lg bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-primary">Security Patch Successful</h3>
+<span class="text-xs text-on-surface-variant whitespace-nowrap ml-4">Yesterday</span>
+</div>
+<p class="text-on-surface-variant line-clamp-1 mb-2">The scheduled security patches for v2.4.1 have been successfully deployed across all staging and production environments.</p>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-xs font-bold text-on-secondary-fixed-variant bg-secondary-fixed px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]" data-icon="lock">lock</span>
+                Security
+              </span>
+</div>
+</div>
+</div>
+<!-- Notification Item 5 (Read) -->
+<div class="notification-card p-md flex items-start gap-md border-b border-outline-variant/5 group cursor-pointer opacity-80 hover:opacity-100">
+<div class="w-12 h-12 rounded-lg bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-primary">Monthly System Report</h3>
+<span class="text-xs text-on-surface-variant whitespace-nowrap ml-4">Oct 24, 2023</span>
+</div>
+<p class="text-on-surface-variant line-clamp-1 mb-2">Your system performance report for October is ready. Uptime was 99.98% with an average response time of 120ms.</p>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-xs font-bold text-on-primary-fixed-variant bg-surface-container-highest px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]" data-icon="analytics">analytics</span>
+                Reports
+              </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-lg flex items-center justify-between">
+<p class="text-label-md font-label-md text-on-surface-variant">Showing <span class="font-bold text-primary">1-5</span> of <span class="font-bold text-primary">124</span> notifications</p>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-tertiary hover:text-tertiary transition-colors disabled:opacity-30 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-tertiary text-on-tertiary font-bold text-label-md">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md">3</button>
+<span class="px-2 text-on-surface-variant">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-md">25</button>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-tertiary hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Premium Visual Accent (Bento Style) -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="md:col-span-2 bg-primary rounded-xl p-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline-md text-headline-md text-white mb-sm">Custom Alerts</h4>
+<p class="text-white/70 max-w-md mb-md">Configure sophisticated notification triggers based on custom metrics, team assignments, or specific client behavior.</p>
+<button class="bg-white text-primary px-6 py-2 rounded-lg font-bold hover:bg-white/90 transition-all">Configure Rules</button>
+</div>
+
+</div>
+<div class="bg-surface-container p-lg rounded-xl border border-outline-variant/20 flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-tertiary text-[48px] mb-md" data-icon="auto_awesome">auto_awesome</span>
+<h4 class="font-bold text-primary mb-xs">AI Summaries</h4>
+<p class="text-on-surface-variant text-label-md">Get daily smart digests of your most important updates.</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+    document.getElementById('unread-toggle').addEventListener('click', function() {
+      const dot = this.querySelector('span');
+      if (this.classList.contains('bg-tertiary')) {
+        dot.style.transform = 'translateX(20px)';
+      } else {
+        dot.style.transform = 'translateX(4px)';
+      }
+    });
+
+    // Simple interaction for notification items
+    document.querySelectorAll('.notification-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // Mock mark as read
+        const unreadIndicator = card.querySelector('.unread-indicator');
+        const blueBar = card.querySelector('.bg-tertiary.absolute');
+        if (unreadIndicator) {
+          unreadIndicator.style.opacity = '0';
+          if(blueBar) blueBar.style.opacity = '0';
+          card.classList.add('opacity-80');
+        }
+      });
+    });
+  </script>
+</body></html>

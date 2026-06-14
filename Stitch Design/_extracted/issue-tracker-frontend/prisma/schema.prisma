@@ -1,0 +1,393 @@
+// ---------------------------------------------------------------------------
+// Client Issue Tracker — Prisma Schema
+// Phase 1 proposal (Master Plan §4 Phase 1 / §2.2 Database & ORM Strategy)
+//
+// Standards enforced here:
+//  - Normalized 3NF design
+//  - Every table has created_at / updated_at  (mapped to snake_case columns)
+//  - Soft deletes only: every table has nullable deleted_at (no hard deletes)
+//  - Unique constraints on username and issue_no
+//  - Dedicated audit/history table (IssueEvent) for the full issue lifecycle
+//  - Tables/columns mapped to snake_case for clean SQL; models stay PascalCase
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // Pooled connection (PgBouncer) used by the app at runtime.
+  url       = env("DATABASE_URL")
+  // Direct connection used by Prisma Migrate (Supabase pattern).
+  directUrl = env("DIRECT_URL")
+}
+
+// ------------------------------- Enums -------------------------------------
+
+enum Role {
+  CLIENT
+  MANAGER
+}
+
+enum WebsiteStatus {
+  ONLINE
+  DOWN
+  DEGRADED
+  UNKNOWN
+}
+
+enum IssueType {
+  BUG
+  FEEDBACK
+  SUGGESTION
+  IMPROVEMENT
+}
+
+enum IssueSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum IssueStatus {
+  OPEN
+  IN_REVIEW
+  IN_PROGRESS
+  WAITING_FOR_CLIENT
+  RESOLVED
+  CLOSED
+}
+
+// Drives the audit trail / timeline. Append-only in practice.
+// Covers the full required lifecycle: creation, status/severity/type/field
+// edits, assignment, comments, responses, attachments, resolution, reopen,
+// close, and AI suggestion generation/application.
+enum IssueEventType {
+  CREATED
+  STATUS_CHANGED
+  SEVERITY_CHANGED
+  TYPE_CHANGED
+  TITLE_EDITED
+  DESCRIPTION_EDITED
+  ASSIGNED
+  UNASSIGNED
+  COMMENT_ADDED
+  RESPONSE_ADDED
+  ATTACHMENT_ADDED
+  ATTACHMENT_REMOVED
+  RESOLVED
+  REOPENED
+  CLOSED
+  AI_SUGGESTION_GENERATED
+  AI_SUGGESTION_APPLIED
+}
+
+// Presigned-upload lifecycle for S3 attachments.
+enum AttachmentStatus {
+  PENDING // presigned URL issued, awaiting client upload
+  UPLOADED // upload confirmed via callback / HEAD check
+  FAILED // upload failed or presigned URL expired
+  QUARANTINED // flagged by a (future) malware/content scan
+}
+
+// Outcome of an AI suggestion call (suggestion-only; never auto-applied).
+enum AiSuggestionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum NotificationType {
+  ISSUE_CREATED
+  ISSUE_STATUS_CHANGED
+  ISSUE_SEVERITY_CHANGED
+  ISSUE_RESPONSE
+  ISSUE_RESOLVED
+  ISSUE_COMMENT
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+  PUSH
+}
+
+// Lifecycle of an async/background notification (queue-friendly, retryable).
+enum NotificationStatus {
+  PENDING
+  SENT
+  DELIVERED
+  RETRYING
+  FAILED
+}
+
+// ------------------------------- Models ------------------------------------
+
+model User {
+  id           String  @id @default(cuid())
+  username     String  @unique
+  email        String  @unique
+  passwordHash String  @map("password_hash")
+  name         String
+  role         Role    @default(CLIENT)
+  isActive     Boolean @default(true) @map("is_active")
+
+  ownedWebsites       Website[]          @relation("WebsiteClient")
+  reportedIssues      Issue[]            @relation("IssueReporter")
+  assignedIssues      Issue[]            @relation("IssueAssignedManager")
+  comments            Comment[]
+  uploadedAttachments Attachment[]
+  issueEvents         IssueEvent[]
+  notifications       Notification[]
+  pushSubscriptions   PushSubscription[]
+  appliedSuggestions  AiSuggestion[]     @relation("SuggestionAppliedBy")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([role])
+  @@index([deletedAt])
+  @@map("users")
+}
+
+model Website {
+  id            String        @id @default(cuid())
+  name          String
+  url           String
+  status        WebsiteStatus @default(UNKNOWN)
+  lastCheckedAt DateTime?     @map("last_checked_at")
+
+  // A website is owned by exactly one client (one client owns many websites).
+  clientId String @map("client_id")
+  client   User   @relation("WebsiteClient", fields: [clientId], references: [id])
+
+  issues Issue[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([clientId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("websites")
+}
+
+model Issue {
+  id          String        @id @default(cuid())
+  // Human-friendly unique identifier (e.g. "ISS-000123"); generated atomically
+  // in the service layer inside a transaction. DB-unique per Master Plan.
+  issueNo     String        @unique @map("issue_no")
+  title       String
+  description String        @db.Text
+  type        IssueType     @default(BUG)
+  severity    IssueSeverity @default(MEDIUM)
+  status      IssueStatus   @default(OPEN)
+
+  websiteId String  @map("website_id")
+  website   Website @relation(fields: [websiteId], references: [id])
+
+  // The client who reported it.
+  reporterId String @map("reporter_id")
+  reporter   User   @relation("IssueReporter", fields: [reporterId], references: [id])
+
+  // The manager assigned to handle this issue (optional until triaged).
+  assignedManagerId String? @map("assigned_manager_id")
+  assignedManager   User?   @relation("IssueAssignedManager", fields: [assignedManagerId], references: [id])
+
+  resolvedAt DateTime? @map("resolved_at")
+  closedAt   DateTime? @map("closed_at")
+
+  comments      Comment[]
+  attachments   Attachment[]
+  events        IssueEvent[]
+  notifications Notification[]
+  aiSuggestion  AiSuggestion?
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([websiteId])
+  @@index([reporterId])
+  @@index([assignedManagerId])
+  @@index([status])
+  @@index([severity])
+  @@index([type])
+  @@index([deletedAt])
+  @@map("issues")
+}
+
+// Comments and manager responses share one table; the IssueEvent type
+// (COMMENT_ADDED vs RESPONSE_ADDED) records the semantic in the timeline.
+// isInternal flags manager-only notes that are hidden from the client.
+model Comment {
+  id         String  @id @default(cuid())
+  issueId    String  @map("issue_id")
+  issue      Issue   @relation(fields: [issueId], references: [id])
+  authorId   String  @map("author_id")
+  author     User    @relation(fields: [authorId], references: [id])
+  body       String  @db.Text
+  isInternal Boolean @default(false) @map("is_internal")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([issueId])
+  @@index([authorId])
+  @@index([deletedAt])
+  @@map("comments")
+}
+
+// Metadata only — file bytes live in S3. fileKey follows
+// {website_id}/{issue_id}/{random_string}.{extension} (Master Plan §3.2).
+model Attachment {
+  id         String @id @default(cuid())
+  issueId    String @map("issue_id")
+  issue      Issue  @relation(fields: [issueId], references: [id])
+  uploaderId String @map("uploader_id")
+  uploader   User   @relation(fields: [uploaderId], references: [id])
+
+  fileKey   String           @unique @map("file_key") // {website_id}/{issue_id}/{random}.{ext}
+  fileName  String           @map("file_name") // original client-provided filename
+  extension String // normalized lowercase extension (pdf, png, log, ...)
+  mimeType  String           @map("mime_type")
+  sizeBytes Int              @map("size_bytes") // enforced <= 10MB in service layer
+  bucket    String? // S3 bucket the object lives in
+  checksum  String? // S3 ETag / md5 captured on upload confirmation
+  status    AttachmentStatus @default(PENDING) // presigned -> uploaded lifecycle
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([issueId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("attachments")
+}
+
+// Audit trail / timeline. Append-only; fromValue/toValue/metadata capture
+// the change so the UI can render a complete history for both roles.
+model IssueEvent {
+  id        String         @id @default(cuid())
+  issueId   String         @map("issue_id")
+  issue     Issue          @relation(fields: [issueId], references: [id])
+  actorId   String?        @map("actor_id") // null for system-generated events
+  actor     User?          @relation(fields: [actorId], references: [id])
+  type      IssueEventType
+  fromValue String?        @map("from_value")
+  toValue   String?        @map("to_value")
+  message   String?
+  metadata  Json?
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([issueId])
+  @@index([actorId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("issue_events")
+}
+
+model Notification {
+  id      String              @id @default(cuid())
+  userId  String              @map("user_id")
+  user    User                @relation(fields: [userId], references: [id])
+  issueId String?             @map("issue_id")
+  issue   Issue?              @relation(fields: [issueId], references: [id])
+  type    NotificationType
+  channel NotificationChannel @default(IN_APP)
+  status  NotificationStatus  @default(PENDING)
+  title   String
+  body    String              @db.Text
+
+  // Delivery tracking (background queue, retryable).
+  attempts    Int       @default(0) // delivery attempts made
+  sentAt      DateTime? @map("sent_at") // handed off to channel (e.g. SMTP)
+  deliveredAt DateTime? @map("delivered_at") // confirmed delivered / rendered in-app
+  failedAt    DateTime? @map("failed_at") // last failure timestamp
+  lastError   String?   @map("last_error") // last delivery error message
+
+  // Read tracking (in-app).
+  readAt DateTime? @map("read_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([userId])
+  @@index([readAt])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("notifications")
+}
+
+// AI outputs are suggestion-only. One current suggestion set per issue
+// (regeneration updates the row). appliedAt/appliedBy record manager approval.
+model AiSuggestion {
+  id      String             @id @default(cuid())
+  issueId String             @unique @map("issue_id")
+  issue   Issue              @relation(fields: [issueId], references: [id])
+  status  AiSuggestionStatus @default(PENDING)
+
+  // Suggested fields (manager edits/approves before applying).
+  suggestedTitle      String?        @map("suggested_title")
+  suggestedCategory   IssueType?     @map("suggested_category")
+  suggestedSeverity   IssueSeverity? @map("suggested_severity")
+  enhancedDescription String?        @map("enhanced_description") @db.Text
+  summary             String?        @db.Text
+  recommendedActions  String?        @map("recommended_actions") @db.Text
+  suggestedResponse   String?        @map("suggested_response") @db.Text
+
+  // --- Traceability / observability ---
+  provider         String // gemini | openai | anthropic | openrouter | ...
+  model            String? // exact model id used
+  requestId        String?  @map("request_id") // provider-side request id
+  promptTokens     Int?     @map("prompt_tokens")
+  completionTokens Int?     @map("completion_tokens")
+  totalTokens      Int?     @map("total_tokens")
+  latencyMs        Int?     @map("latency_ms")
+  costUsd          Decimal? @map("cost_usd") @db.Decimal(10, 6)
+  error            String?  @db.Text // populated when status = FAILED
+  raw              Json? // full provider payload
+
+  // Application audit (which fields the manager actually applied, and by whom).
+  appliedFields Json?     @map("applied_fields")
+  appliedAt     DateTime? @map("applied_at")
+  appliedById   String?   @map("applied_by_id")
+  appliedBy     User?     @relation("SuggestionAppliedBy", fields: [appliedById], references: [id])
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([status])
+  @@index([provider])
+  @@index([deletedAt])
+  @@map("ai_suggestions")
+}
+
+// Web Push (Vapid) subscriptions for in-app/browser notifications.
+model PushSubscription {
+  id        String  @id @default(cuid())
+  userId    String  @map("user_id")
+  user      User    @relation(fields: [userId], references: [id])
+  endpoint  String  @unique
+  p256dh    String
+  auth      String
+  userAgent String? @map("user_agent")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([userId])
+  @@map("push_subscriptions")
+}

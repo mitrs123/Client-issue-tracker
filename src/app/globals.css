@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design System: "Stark Modern" (from Stitch designs)
+   High-contrast minimalist SaaS — white surfaces, deep navy (secondary),
+   neon-pink (tertiary) accents, Inter type. Tokens map 1:1 to the Stitch
+   tailwind.config so the screens render pixel-for-pixel.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Surfaces & neutrals */
+  --color-surface: #fcf8f8;
+  --color-surface-bright: #fcf8f8;
+  --color-surface-dim: #ddd9d9;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f1edec;
+  --color-surface-container-high: #ebe7e7;
+  --color-surface-container-highest: #e5e2e1;
+  --color-surface-variant: #e5e2e1;
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #444748;
+  --color-background: #fcf8f8;
+  --color-on-background: #1c1b1b;
+
+  /* Brand roles */
+  --color-primary: #5d5f5f;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed: #e2e2e2;
+  --color-primary-fixed-dim: #c6c6c7;
+  --color-secondary: #201747;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #cdc2fd;
+  --color-on-secondary-container: #564d80;
+  --color-tertiary: #fe147a;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #ffffff;
+  --color-tertiary-fixed: #ffd9e0;
+  --color-on-tertiary-fixed-variant: #8f0041;
+
+  /* Feedback */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+
+  /* Lines */
+  --color-outline: #747878;
+  --color-outline-variant: #c4c7c8;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f4f0ef;
+
+  /* Typography — all Inter (provided by next/font as --font-sans) */
+  --font-headline-lg: var(--font-sans);
+  --font-headline-md: var(--font-sans);
+  --font-body-lg: var(--font-sans);
+  --font-body-md: var(--font-sans);
+  --font-label-md: var(--font-sans);
+
+  --text-headline-lg: 48px;
+  --text-headline-lg--line-height: 56px;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 700;
+  --text-headline-md: 32px;
+  --text-headline-md--line-height: 40px;
+  --text-headline-md--font-weight: 600;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-label-md: 14px;
+  --text-label-md--line-height: 20px;
+  --text-label-md--letter-spacing: 0.01em;
+
+  /* Named spacing scale (8px base) — enables p-md, gap-sm, py-xl, etc. */
+  --spacing-xs: 4px;
+  --spacing-base: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 24px;
+  --spacing-lg: 48px;
+  --spacing-xl: 80px;
+
+  /* Explicit max-width overrides to prevent Tailwind v4 mapping to spacing tokens */
+  --max-width-xs: 20rem;
+  --max-width-sm: 24rem;
+  --max-width-md: 28rem;
+  --max-width-lg: 32rem;
+  --max-width-xl: 36rem;
+}
+
+
+@layer base {
+  body {
+    background-color: var(--color-surface-bright);
+    color: var(--color-on-surface);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+/* Material Symbols Outlined (loaded via <link> in the root layout) */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+.material-symbols-outlined.fill {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Reusable visual primitives from the Stitch designs */
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+.login-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(32, 23, 71, 0.1);
+}
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.mesh-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(254, 20, 122, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(32, 23, 71, 0.05) 0px, transparent 50%);
+}
+/* Login page root — isolation creates a new stacking context so z-index: -1 on mesh-bg stays within bounds */
+.mesh-bg-page {
+  position: relative;
+  isolation: isolate;
+}
+/*
+ * Login page shell — mirrors the Stitch reference exactly:
+ *   body { min-h-screen flex items-center justify-center p-md overflow-hidden }
+ * p-md = 24px in the Stitch spacing scale.
+ * Card gets its natural content height (no stretching / clipping).
+ */
+.login-page-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px;
+  overflow: hidden;
+  background-color: var(--color-surface-bright);
+  isolation: isolate;
+}

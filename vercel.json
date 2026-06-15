@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "//regions": "Run functions in Seoul (icn1) — same region as the Supabase DB (ap-northeast-2). Co-locating server and database turns each query round-trip from ~200-400ms (cross-ocean) into single-digit ms.",
   "regions": ["icn1"],
   "crons": [
     { "path": "/api/notifications/dispatch", "schedule": "0 0 * * *" }

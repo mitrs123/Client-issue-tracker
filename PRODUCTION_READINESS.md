@@ -2,7 +2,7 @@
 
 **Author:** Platform / DevOps
 **Scope:** Client Issue Tracker — Next.js 15 (App Router) + Prisma + PostgreSQL (Supabase) + Vercel
-**Purpose:** A tailored assessment of what is already production-grade in this codebase and the concrete, architecture-specific steps required to achieve Tier 3 / exceptional enterprise-grade quality.
+**Purpose:** A tailored assessment of what is already production-grade in this codebase and the concrete, architecture-specific steps required to achieve exceptional enterprise-grade quality.
 
 This document balances practical implementation with an enterprise mindset, explaining what is implemented now, what is prototype-only, and what must be upgraded for a high-traffic production environment. The goal is to demonstrate awareness of what is required to maintain a mission-critical SaaS application.
 

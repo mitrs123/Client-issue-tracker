@@ -20,7 +20,7 @@
 ## 2. Sample Prompts Matrix
 
 ### 🏛️ Architecture & System Design
-- *"Start and follow the `.clauderules`, `MASTER_PLAN.md`, `specification.docx`, `Task.docx`."* — established the Yield & Confirm phased workflow and Tier-3 production target.
+- *"Start and follow the `.clauderules`, `MASTER_PLAN.md`, `specification.docx`, `Task.docx`."* — established the Yield & Confirm phased workflow.
 
 ### 🗄️ Database Schema & Design
 - *"Phase 1: Propose the Prisma schema based on the Master Plan."* — normalized 3NF schema with audit trail, soft deletes, snake_case mapping, unique `username`/`issue_no`.
@@ -36,7 +36,7 @@
 - _(pending)_
 
 ### 🚀 Production Readiness & Security
-- *(during Phase 2)* — `npm audit` review: bumped Next.js off CVE-2025-66478 and pinned a patched `postcss` via `overrides` → **0 vulnerabilities**. (Tier-3 requirement.)
+- *(during Phase 2)* — `npm audit` review: bumped Next.js off CVE-2025-66478 and pinned a patched `postcss` via `overrides` → **0 vulnerabilities**. 
 - *"No Upstash — use in-memory rate limiting via the header."* — implemented a process-local fixed-window limiter keyed by `X-Forwarded-For`/`X-Real-IP`, emitting `Retry-After` + `X-RateLimit-*` headers; applied to login (5/min) and issue/comment creation.
 - *"Add rate limit to the issue status + severity update routes; verify it returns 429 with Retry-After; add Google reCAPTCHA + testing; re-run npm audit."* — rate-limited both manager update routes (30/min, before auth), added graceful server-side reCAPTCHA verification on login, added a `node:test` suite, and verified end-to-end.
 
